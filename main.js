@@ -38,7 +38,7 @@ async function handleFile(root,type,year,filename){
         /**
          * Here , we've ungzipped this data, and trying to format it.
          */
-        const parsed_data = await parse_data(solved_data,type);
+        const parsed_data = await parse_data(solved_data.toString(),type);
 
         console.log(parsed_data);
     })
