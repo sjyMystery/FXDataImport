@@ -2,6 +2,7 @@ const {ungzip} = require('node-gzip');
 const moment = require('moment');
 const fs = require('fs');
 const path = require('path');
+const {HistoryPrice} = require('./model')
 
 const root_path = './data';
 
@@ -40,7 +41,7 @@ async function handleFile(root,type,year,filename){
          * Here , we've ungzipped this data, and trying to format it.
          */
             const parsed_data = await parse_data(solved_data.toString(), type);
-
+            HistoryPrice.bulkCreate(parsed_data);
             console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
         }
         catch (e) {
