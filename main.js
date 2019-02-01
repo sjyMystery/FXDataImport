@@ -32,6 +32,9 @@ async function handleFile(root,type,year,filename){
             console.log(err);
         }
         const solved_data = await ungzip(data);
+
+        console.log(solved_data)
+
         /**
          * Here , we've ungzipped this data, and trying to format it.
          */
