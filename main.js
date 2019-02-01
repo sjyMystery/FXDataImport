@@ -5,7 +5,7 @@ const path = require('path');
 
 const root_path = './data';
 
-function readTypes(path){
+function readPath(path){
     filenames=fs.readdirSync(path);
     return filenames
 }
@@ -25,8 +25,8 @@ const parse_data=(data,type)=>
         type,
     }));
 
-async function handleFile(type,year,filename){
-    const full_path = `${type}/${year}/${filename}`;
+async function handleFile(root,type,year,filename){
+    const full_path = path.join(root,type,year,filename)
     file = fs.readFile(full_path,async (err,data)=>{
         if(err){
             console.log(err);
@@ -40,7 +40,15 @@ async function handleFile(type,year,filename){
         console.log(parsed_data);
     })
 }
+async function handleType(root,type) {
+    const type_path = path.join(root,type);
+    const years = readPath(type_path);
+    years.forEach(
+        year=>
+            readPath(path.join(root,type,year))
+                .forEach(
+                    filename=>handleFile(root,type,year,filename))
+    )
+}
 
-
-const types = readTypes(root_path);
-
+readTypes(root_path).forEach(type=>handleType(root_path,type));
