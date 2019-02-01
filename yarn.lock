@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "http://registry.npm.taobao.org/moment/download/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+
 node-gzip@^1.1.2:
   version "1.1.2"
   resolved "http://registry.npm.taobao.org/node-gzip/download/node-gzip-1.1.2.tgz#245bd171b31ce7c7f50fc4cd0ca7195534359afb"
