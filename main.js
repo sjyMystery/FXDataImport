@@ -41,7 +41,7 @@ async function handleFile(root,type,year,filename){
          */
             const parsed_data = await parse_data(solved_data.toString(), type);
 
-            console.log(`parse compelete:${type},${year},${filename} readerror——${e.message},total:${i++}`)
+            console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
         }
         catch (e) {
             console.log(`error:${type},${year},${filename} readerror——${e.message}`)
