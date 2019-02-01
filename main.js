@@ -26,21 +26,17 @@ const parse_data=(data,type)=>
     }));
 
 async function handleFile(root,type,year,filename){
-    const full_path = path.join(root,type,year,filename)
+    const full_path = path.join(root,type,year,filename);
     file = fs.readFile(full_path,async (err,data)=>{
         if(err){
             console.log(err);
         }
         const solved_data = await ungzip(data);
 
-        console.log(solved_data)
-
         /**
          * Here , we've ungzipped this data, and trying to format it.
          */
         const parsed_data = await parse_data(solved_data.toString(),type);
-
-        console.log(parsed_data);
     })
 }
 async function handleType(root,type) {
