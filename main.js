@@ -51,4 +51,4 @@ async function handleType(root,type) {
     )
 }
 
-readTypes(root_path).forEach(type=>handleType(root_path,type));
+readPath(root_path).forEach(type=>handleType(root_path,type));
