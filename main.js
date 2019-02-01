@@ -5,6 +5,8 @@ const path = require('path');
 
 const root_path = './data';
 
+let i =0;
+
 function readPath(path){
     filenames=fs.readdirSync(path);
     return filenames
@@ -38,6 +40,8 @@ async function handleFile(root,type,year,filename){
          * Here , we've ungzipped this data, and trying to format it.
          */
             const parsed_data = await parse_data(solved_data.toString(), type);
+
+            console.log(`parse compelete:${type},${year},${filename} readerror——${e.message},total:${i++}`)
         }
         catch (e) {
             console.log(`error:${type},${year},${filename} readerror——${e.message}`)
