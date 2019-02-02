@@ -20,14 +20,14 @@ const parse_data=(data,type)=>
         return {
         start_date:moment(line[0]),
         end_date:moment(line[0]).add(1,'m'),
-        bid_open:line[1],
-        bid_high:line[2],
-        bid_low:line[3],
-        bid_close:line[4],
-        ask_open:line[5],
-        ask_high:line[6],
-        ask_low:line[7],
-        ask_close:line[8],
+        bid_open:parseFloat(line[1]),
+        bid_high:parseFloat(line[2]),
+        bid_low:parseFloat(line[3]),
+        bid_close:parseFloat(line[4]),
+        ask_open:parseFloat(line[5]),
+        ask_high:parseFloat(line[6]),
+        ask_low:parseFloat(line[7]),
+        ask_close:parseFloat(line[8]),
         type,
         }
     });
