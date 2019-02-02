@@ -62,18 +62,17 @@ async function handleType(root,type) {
     const type_path = path.join(root,type);
     const years = readPath(type_path);
     for(const year of years){
-        const year_work=readPath(path.join(root, type, year))
-            .map(
+        try{
+            const year_work=readPath(path.join(root, type, year))
+                .map(
                 filename => handleFile(root, type, year, filename))
-        const year_result = await Promise.all(year_work)
-        const history_in_year = year_result.reduce((left,right)=>left.concat(right),[]);
-        HistoryPrice.bulkCreate(history_in_year).then(
-            result=>{
-                console.log(`saving compelete:${type},${year} total:${j++}/${i}`)
-            }
-        ).catch(error=>{
+            const year_result = await Promise.all(year_work)
+            const history_in_year = year_result.reduce((left,right)=>left.concat(right),[]);
+            await HistoryPrice.bulkCreate(history_in_year)
+        }
+        catch(error){
             console.log(`saving error:${type},${year} ${error.message}`)
-        })
+        }
         console.log(`${type} ${year} complete`)
     }
     console.log(`${type} complete`)
