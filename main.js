@@ -68,6 +68,7 @@ async function handleType(root,type) {
                 filename => handleFile(root, type, year, filename))
         await Promise.all(year_data)
     }
+    console.log(`${type} complete`)
     return;
 }
 
