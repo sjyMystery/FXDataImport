@@ -62,14 +62,13 @@ async function handleFile(root,type,year,filename){
 async function handleType(root,type) {
     const type_path = path.join(root,type);
     const years = readPath(type_path);
-    const years_data=years.map(
-        year=> {
-            const year_data=readPath(path.join(root, type, year))
-                .map(
-                    filename => handleFile(root, type, year, filename))
-            return Promise.all(year_data)
-        })
-    return await Promise.all(years_data)
+    for(const year of years){
+        const year_data=readPath(path.join(root, type, year))
+            .map(
+                filename => handleFile(root, type, year, filename))
+        await Promise.all(year_data)
+    }
+    return;
 }
 
 async function main(){
