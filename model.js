@@ -9,6 +9,7 @@ const sequelize = new Sequelize('database', 'root', '123456', {
         acquire: 30000,
         idle: 10000
     },
+    logging:false,
 });
 
 const {DATE,STRING,FLOAT} = Sequelize

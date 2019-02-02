@@ -43,7 +43,6 @@ async function handleFile(root,type,year,filename){
             const parsed_data = await parse_data(solved_data.toString(), type);
             HistoryPrice.bulkCreate(parsed_data).then(
                 result=>{
-
                     console.log(`saving compelete:${type},${year},${filename} total:${j++}/${i}`)
                 }
             ).catch(error=>{
