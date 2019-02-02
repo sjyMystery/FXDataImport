@@ -62,12 +62,22 @@ async function handleFile(root,type,year,filename){
 async function handleType(root,type) {
     const type_path = path.join(root,type);
     const years = readPath(type_path);
-    years.forEach(
-        year=>
-            readPath(path.join(root,type,year))
-                .forEach(
-                    filename=>handleFile(root,type,year,filename))
-    )
+    const years_data=years.map(
+        year=> {
+            const year_data=readPath(path.join(root, type, year))
+                .map(
+                    filename => handleFile(root, type, year, filename))
+            return Promise.all(year_data)
+        })
+    return await Promise.all(years_data)
 }
 
-readPath(root_path).forEach(type=>handleType(root_path,type));
+async function main(){
+    const types = readPath(root_path)
+    for(type of types){
+        await handleType(root_path,type)
+    }
+}
+
+main()
+
