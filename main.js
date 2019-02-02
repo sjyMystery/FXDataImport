@@ -48,8 +48,6 @@ function handleFile(root,type,year,filename){
                      */
                     const parsed_data = await parse_data(solved_data.toString(), type);
                     console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
-
-                    console.log(parsed_data)
                     resolve(parsed_data)
                 }
                 catch (e) {
