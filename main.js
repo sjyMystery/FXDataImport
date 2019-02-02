@@ -14,7 +14,10 @@ function readPath(path){
 }
 
 const parse_data=(data,type)=>
-    data.split('\r\n').slice(1,-2).map(line=>({
+    data.split('\r\n').slice(1,-2).map(un_parsed_line=>
+    {
+        const line = un_parsed_line.split(',');
+        return {
         start_date:moment(line[0]),
         end_date:moment(line[0]).add(1,'m'),
         bid_open:line[1],
@@ -26,7 +29,8 @@ const parse_data=(data,type)=>
         ask_low:line[7],
         ask_close:line[8],
         type,
-    }));
+        }
+    });
 
 async function handleFile(root,type,year,filename){
     const full_path = path.join(root,type,year,filename);
