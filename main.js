@@ -6,7 +6,7 @@ const {HistoryPrice} = require('./model')
 
 const root_path = './data';
 
-let i =0;
+let i =0,j=0;
 
 function readPath(path){
     filenames=fs.readdirSync(path);
@@ -41,7 +41,14 @@ async function handleFile(root,type,year,filename){
          * Here , we've ungzipped this data, and trying to format it.
          */
             const parsed_data = await parse_data(solved_data.toString(), type);
-            HistoryPrice.bulkCreate(parsed_data);
+            HistoryPrice.bulkCreate(parsed_data).then(
+                result=>{
+
+                    console.log(`saving compelete:${type},${year},${filename} total:${j++}/${i}`)
+                }
+            ).catch(error=>{
+                console.log(`saving error:${type},${year},${filename} ${error.message}`)
+            })
             console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
         }
         catch (e) {
