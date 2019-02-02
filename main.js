@@ -68,7 +68,7 @@ async function handleType(root,type) {
             .map(
                 filename => handleFile(root, type, year, filename))
         const year_result = await Promise.all(year_work)
-        const history_in_year = year_result.reduce((left,right)=>left+right,[]);
+        const history_in_year = year_result.reduce((left,right)=>left.append(right),[]);
         console.log(year_result,year_work,history_in_year)
         HistoryPrice.bulkCreate(history_in_year).then(
             result=>{
