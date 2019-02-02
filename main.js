@@ -34,30 +34,35 @@ const parse_data=(data,type)=>
 
 async function handleFile(root,type,year,filename){
     const full_path = path.join(root,type,year,filename);
-    file = fs.readFile(full_path,async (err,data)=> {
-        if (err) {
-            console.log(err);
-        }
-        try {
-            const solved_data = await ungzip(data);
-
-        /**
-         * Here , we've ungzipped this data, and trying to format it.
-         */
-            const parsed_data = await parse_data(solved_data.toString(), type);
-            HistoryPrice.bulkCreate(parsed_data).then(
-                result=>{
-                    console.log(`saving compelete:${type},${year},${filename} total:${j++}/${i}`)
+    await new Promise(
+        ((resolve,reject)=>{
+            file = fs.readFile(full_path,async (err,data)=> {
+                if (err) {
+                    console.log(err);
                 }
-            ).catch(error=>{
-                console.log(`saving error:${type},${year},${filename} ${error.message}`)
+                try {
+                    const solved_data = await ungzip(data);
+
+                    /**
+                     * Here , we've ungzipped this data, and trying to format it.
+                     */
+                    const parsed_data = await parse_data(solved_data.toString(), type);
+                    HistoryPrice.bulkCreate(parsed_data).then(
+                        result=>{
+                            console.log(`saving compelete:${type},${year},${filename} total:${j++}/${i}`)
+                            resolve()
+                        }
+                    ).catch(error=>{
+                        console.log(`saving error:${type},${year},${filename} ${error.message}`)
+                    })
+                    console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
+                }
+                catch (e) {
+                    console.log(`error:${type},${year},${filename} readerror——${e.message}`)
+                }
             })
-            console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
-        }
-        catch (e) {
-            console.log(`error:${type},${year},${filename} readerror——${e.message}`)
-        }
-    })
+        })
+    )
 }
 async function handleType(root,type) {
     const type_path = path.join(root,type);
