@@ -4,10 +4,10 @@ const sequelize = new Sequelize('database', 'root', '123456', {
     port: 3306,
     dialect: 'mysql',
     pool: {
-        max: 8,
+        max: 128,
         min: 0,
-        acquire: 30000,
-        idle: 10000
+        acquire: 300000,
+        idle: 100000
     },
     logging:false,
 });
