@@ -47,18 +47,12 @@ async function handleFile(root,type,year,filename){
                      * Here , we've ungzipped this data, and trying to format it.
                      */
                     const parsed_data = await parse_data(solved_data.toString(), type);
-                    HistoryPrice.bulkCreate(parsed_data).then(
-                        result=>{
-                            console.log(`saving compelete:${type},${year},${filename} total:${j++}/${i}`)
-                            resolve()
-                        }
-                    ).catch(error=>{
-                        console.log(`saving error:${type},${year},${filename} ${error.message}`)
-                    })
                     console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
+                    resolve(parsed_data)
                 }
                 catch (e) {
                     console.log(`error:${type},${year},${filename} readerror——${e.message}`)
+                    reject(e)
                 }
             })
         })
@@ -68,10 +62,18 @@ async function handleType(root,type) {
     const type_path = path.join(root,type);
     const years = readPath(type_path);
     for(const year of years){
-        const year_data=readPath(path.join(root, type, year))
+        const year_work=readPath(path.join(root, type, year))
             .map(
                 filename => handleFile(root, type, year, filename))
-        await Promise.all(year_data)
+        const year_result = await Promise.all(year_work)
+        const history_in_year = year_result.reduce((left,right)=>left+right,[]);
+        HistoryPrice.bulkCreate(history_in_year).then(
+            result=>{
+                console.log(`saving compelete:${type},${year} total:${j++}/${i}`)
+            }
+        ).catch(error=>{
+            console.log(`saving error:${type},${year} ${error.message}`)
+        })
         console.log(`${type} ${year} complete`)
     }
     console.log(`${type} complete`)
