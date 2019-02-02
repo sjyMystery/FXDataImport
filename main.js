@@ -48,6 +48,8 @@ async function handleFile(root,type,year,filename){
                      */
                     const parsed_data = await parse_data(solved_data.toString(), type);
                     console.log(`parse compelete:${type},${year},${filename} total:${i++}`)
+
+                    console.log(parsed_data)
                     resolve(parsed_data)
                 }
                 catch (e) {
@@ -67,7 +69,7 @@ async function handleType(root,type) {
                 filename => handleFile(root, type, year, filename))
         const year_result = await Promise.all(year_work)
         const history_in_year = year_result.reduce((left,right)=>left+right,[]);
-        console.log(year_result,year_work)
+        console.log(year_result,year_work,history_in_year)
         HistoryPrice.bulkCreate(history_in_year).then(
             result=>{
                 console.log(`saving compelete:${type},${year} total:${j++}/${i}`)
