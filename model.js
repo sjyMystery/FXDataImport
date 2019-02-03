@@ -14,7 +14,7 @@ const sequelize = new Sequelize('database', 'root', '123456', {
 
 const {DATE,STRING,FLOAT} = Sequelize
 
-const HistoryPrice = sequelize.define('user', {
+const HistoryPrice = sequelize.define('bins', {
     start_date:DATE,
     end_date:DATE,
     bid_open:FLOAT,
@@ -26,6 +26,10 @@ const HistoryPrice = sequelize.define('user', {
     ask_low:FLOAT,
     ask_close:FLOAT,
     type:STRING,
+}, {
+    timestamps:true,
+    createdAt:'created_at',
+    updatedAt:'updated_at'
 });
 
 sequelize.sync()
