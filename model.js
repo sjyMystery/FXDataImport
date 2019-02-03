@@ -15,6 +15,11 @@ const sequelize = new Sequelize('database', 'root', '123456', {
 const {DATE,STRING,FLOAT} = Sequelize
 
 const HistoryPrice = sequelize.define('bins', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     start_date:DATE,
     end_date:DATE,
     bid_open:FLOAT,
