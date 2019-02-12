@@ -12,6 +12,7 @@
     "moment": "^2.24.0",
     "mysql2": "^1.6.4",
     "node-gzip": "^1.1.2",
-    "sequelize": "^4.42.0"
+    "sequelize": "^4.42.0",
+    "sqlite3": "^4.0.6"
   }
 }
